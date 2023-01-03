@@ -6,7 +6,7 @@ canvas.height = 576;
 
 const gravity = 0.5;
 class Sprite {
-    constructor({position, velocity}) {
+    constructor({position, velocity, color = 'red'}) {
         this.position = position;
         this.velocity = velocity;
         this.height = 150;
@@ -16,11 +16,13 @@ class Sprite {
             height: 50,
         };
         this.isJumping = false;
+        this.color = color;
     }
 
     draw() {
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.position.x, this.position.y, 50, 150);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x, this.position.y, 50, this.height);
+        ctx.fillStyle = 'green';
         ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
     }
 
@@ -40,7 +42,7 @@ class Sprite {
 }
 
 const player = new Sprite({position: {x: 0, y: 0}, velocity: {x: 0, y: 0}});
-const enemy = new Sprite({position: {x: 200, y: 0}, velocity: {x: 0, y: 0}});
+const enemy = new Sprite({position: {x: 200, y: 0}, velocity: {x: 0, y: 0}, color: 'blue'});
 
 function animate() {
     requestAnimationFrame(animate);
@@ -56,8 +58,6 @@ addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp' && !player.isJumping) {
         player.velocity.y = -7;
         player.isJumping = true;
-    } else if (e.key === 'ArrowDown') {
-        // player.velocity.y = 5;
     } else if (e.key === 'ArrowLeft') {
         player.velocity.x = -5;
     } else if (e.key === 'ArrowRight') {
