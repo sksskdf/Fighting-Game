@@ -4,27 +4,35 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 576;
 
-const gravity = 0.2;
+const gravity = 0.5;
 class Sprite {
-    constructor({position, velocity, height, width}) {
+    constructor({position, velocity}) {
         this.position = position;
         this.velocity = velocity;
         this.height = 150;
-        this.width = width;
+        this.attackBox = {
+            position: this.position,
+            width: 100,
+            height: 50,
+        };
+        this.isJumping = false;
     }
 
     draw() {
         ctx.fillStyle = 'red';
         ctx.fillRect(this.position.x, this.position.y, 50, 150);
+        ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
     }
 
     update() {
         this.draw();
 
         this.position.y += this.velocity.y;
+        this.position.x += this.velocity.x;
 
         if (this.position.y + this.height + this.velocity.y >= canvas.height) {
             this.velocity.y = 0;
+            this.isJumping = false;
         } else {
             this.velocity.y += gravity;
         }
@@ -45,13 +53,22 @@ function animate() {
 animate();
 
 addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowUp') {
-        player.velocity.y = -5;
+    if (e.key === 'ArrowUp' && !player.isJumping) {
+        player.velocity.y = -7;
+        player.isJumping = true;
     } else if (e.key === 'ArrowDown') {
-        player.velocity.y = 5;
+        // player.velocity.y = 5;
     } else if (e.key === 'ArrowLeft') {
         player.velocity.x = -5;
     } else if (e.key === 'ArrowRight') {
         player.velocity.x = 5;
+    }
+});
+
+addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowLeft') {
+        player.velocity.x = 0;
+    } else if (e.key === 'ArrowRight') {
+        player.velocity.x = 0;
     }
 });
