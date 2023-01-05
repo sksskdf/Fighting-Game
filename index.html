@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Fighting-Game</title>
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
+<div class="outerDiv">
+    <div class="status">
+        <div class="player1">
+            <div class="bgRed"></div>
+            <div id="player1Health" class="healthBar">
+
+            </div>
+        </div>
+        <div id="timer" class="timer">60</div>
+        <div class="player2">
+            <div class="bgRed"></div>
+            <div id="player2Health" class="healthBar">
+
+            </div>
+        </div>
+    </div>
     <canvas></canvas>
-    <script src="./index.js"></script>
+    <div id="displayText"></div>
+</div>
+<script src="./index.js"></script>
 </body>
 </html>
